@@ -1,0 +1,54 @@
+$schema: 'https://moonrepo.dev/schemas/project.json'
+
+language: 'rust'
+layer: 'application'
+
+fileGroups:
+  sources:
+    - 'src/**/*'
+    - 'build.rs'
+    - 'build/**/*'
+    - 'content/**/*'
+    - 'examples/**/*'
+    - 'api/**/*'
+    - 'Cargo.toml'
+    - '/Cargo.toml'
+
+tasks:
+  check:
+    command: 'cargo check -p docs-app --all-targets'
+    inputs: ['@group(sources)']
+
+  check-wasm:
+    command: 'cargo check -p docs-app --features hydrate --target wasm32-unknown-unknown'
+    inputs: ['@group(sources)']
+
+  check-ssr:
+    command: 'cargo check -p docs-app --features ssr'
+    inputs: ['@group(sources)']
+
+  lint:
+    command: 'cargo clippy -p docs-app --all-targets -- -D warnings'
+    inputs: ['@group(sources)']
+
+  fmt:
+    command: 'cargo fmt -p docs-app --check'
+    inputs: ['@group(sources)']
+
+  # Modo CSR (desenvolvimento): Trunk com `csr`, em http://localhost:8080
+  dev:
+    script: 'trunk serve'
+    preset: 'server'
+
+  # Modo SSG (publicação): wasm `hydrate` + bin `ssr` que gera um HTML por rota em dist/site
+  # (ssg e dev usam dist/ diferentes: dist/site × dist/csr — nunca o mesmo diretório)
+  build:
+    script: 'cargo leptos build --release && ../../target/release/docs-app'
+    inputs: ['@group(sources)']
+    outputs: ['dist/site']
+
+  # Serve a pasta estática gerada (como um host de arquivos faria)
+  preview:
+    script: 'python3 -m http.server 8081 --directory dist/site'
+    deps: ['~:build']
+    preset: 'server'

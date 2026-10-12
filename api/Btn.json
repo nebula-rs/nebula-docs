@@ -1,0 +1,22 @@
+{
+  "props": {
+    "label": { "type": "String", "desc": "Texto do botão." },
+    "icon": { "type": "&'static str", "desc": "Classe literal do ícone à esquerda (ex.: `i-lucide-copy`)." },
+    "icon_right": { "type": "&'static str", "desc": "Classe literal do ícone à direita." },
+    "color": { "type": "Color", "default": "Color::Primary", "desc": "Papel de cor do tema.", "values": ["Primary", "Secondary", "Positive", "Negative", "Info", "Warning", "Neutral"] },
+    "design": { "type": "BtnDesign", "default": "BtnDesign::Unelevated", "desc": "Aparência (exclusivas).", "values": ["Unelevated", "Outline", "Flat"] },
+    "round": { "type": "bool", "default": "false", "desc": "Botão redondo (use com `icon`)." },
+    "dense": { "type": "bool", "default": "false", "desc": "Versão compacta." },
+    "href": { "type": "String", "desc": "Renderiza um `<a>` em vez de `<button>`. Links internos navegam pelo `Router` do app." },
+    "target": { "type": "String", "desc": "`target` do `<a>` (só com `href`)." },
+    "type_": { "type": "BtnType", "default": "BtnType::Button", "desc": "Atributo `type` do `<button>` (`type` é palavra reservada em Rust).", "values": ["Button", "Submit", "Reset"] },
+    "disable": { "type": "Signal<bool>", "default": "false", "desc": "Desabilita o botão." },
+    "aria_label": { "type": "String", "desc": "Rótulo de acessibilidade (necessário em botões só com ícone)." }
+  },
+  "slots": {
+    "default": { "desc": "Conteúdo exibido depois do `label`." }
+  },
+  "events": {
+    "on_click": { "desc": "Callback chamado com o `MouseEvent` do clique." }
+  }
+}

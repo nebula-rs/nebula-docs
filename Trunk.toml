@@ -1,0 +1,13 @@
+[build]
+target = "index.html"
+dist = "dist/csr"
+
+[serve]
+port = 8080
+
+# llms.txt, llms-full.txt e as cópias .md vêm do build.rs (OUT_DIR): o bin `press-static` as copia.
+[[hooks]]
+stage = "post_build"
+# `sh -c`: o Trunk não expande variáveis nos argumentos.
+command = "sh"
+command_arguments = ["-c", "cargo run --quiet -p docs-app --bin press-static -- \"$TRUNK_STAGING_DIR\""]

@@ -1,0 +1,12 @@
+{
+  "props": {
+    "color": { "type": "Color", "default": "Color::Neutral", "desc": "Papel de cor do tema.", "values": ["Primary", "Secondary", "Positive", "Negative", "Info", "Warning", "Neutral"] },
+    "dense": { "type": "bool", "default": "false", "desc": "Menos espaçamento interno." },
+    "rounded": { "type": "bool", "default": "false", "desc": "Cantos arredondados." }
+  },
+  "slots": {
+    "default": { "desc": "Conteúdo da faixa." },
+    "avatar": { "desc": "`<BannerAvatar slot:avatar>…</BannerAvatar>`: ícone ou imagem à esquerda." },
+    "action": { "desc": "`<BannerAction slot:action>…</BannerAction>`: botões à direita." }
+  }
+}
